@@ -40,4 +40,9 @@ class TurnTest < Minitest::Test
     turn = Turn.new("blue", card)
     assert_equal turn.feedback, "Correct!"
   end
+  def test_feedback_for_incorrect_guess
+    card = Card.new("What color is the sky?", "blue", :Science)
+    turn = Turn.new("black", card)
+    assert_equal turn.feedback, "Incorrect."
+  end
 end
