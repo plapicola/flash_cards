@@ -50,4 +50,15 @@ class TestDeck < Minitest::Test
     deck = Deck.new(cards)
     assert_equal [], deck.cards_in_category(:Politics)
   end
+
+  def test_it_can_find_multiple_cards
+    card1 = Card.new("What color is the sky?", "blue", :Science)
+    card2 = Card.new("What is your quest?", "To seek the holy grail", :Movies)
+    card3 = Card.new("What is the meaning to life?", 42, :Philosiphy)
+    card4 = Card.new("What day should one always remember?", "The fifth of November", :Movies)
+    cards = [card1, card2, card3, card4]
+
+    deck = Deck.new(cards)
+    assert_equal [card2, card4], deck.cards_in_category(:Movies)
+  end
 end
