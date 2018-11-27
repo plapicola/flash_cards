@@ -21,4 +21,33 @@ class Round
     return @deck.cards[@current_card_index]
   end
 
+  def guesses
+    return @turns
+  end
+
+  def number_correct
+    count_correct = 0
+    @turns.each do |turn|
+      if turn.correct?
+        count_correct += 1
+      end
+    end
+
+    return count_correct
+  end
+
+  def percent_correct
+    return number_correct / @turns.count.to_f * 100
+  end
+
+  def number_correct_by_category(category)
+    count_correct = 0
+    @turns.each do |turn|
+      if turn.card.category == category && turn.correct?
+        count_correct += 1
+      end
+    end
+    return count_correct
+  end
+
 end

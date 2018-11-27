@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/round'
+require './lib/round'
 
 
 class RoundTest < Minitest::Test
@@ -62,4 +62,60 @@ class RoundTest < Minitest::Test
 
     assert round.take_turn("blue").correct?
   end
+
+  def test_it_can_give_feedback_on_last_guess
+    card1 = Card.new("What color is the sky?", "blue", :Science)
+    deck = Deck.new([card1])
+    round = Round.new(deck)
+
+    round.take_turn("rainbow")
+
+    assert_equal round.guesses.last.feedback, "Incorrect."
+  end
+
+  def test_it_counts_correct_guesses
+    card1 = Card.new("What color is the sky?", "blue", :Science)
+    card2 = Card.new("What is your quest?", "To seek the holy grail", :Movies)
+    deck = Deck.new([card1, card2])
+    round = Round.new(deck)
+
+    round.take_turn("blue")
+    assert_equal round.number_correct, 1
+    round.take_turn("To seek the holy grail")
+    assert_equal round.number_correct, 2
+  end
+
+  def test_it_tracks_percentage_correct
+    card1 = Card.new("What color is the sky?", "blue", :Science)
+    card2 = Card.new("What is your quest?", "To seek the holy grail", :Movies)
+    deck = Deck.new([card1, card2])
+    round = Round.new(deck)
+
+    round.take_turn("blue")
+    assert_equal round.percent_correct, 100.0
+    round.take_turn("To learn how to type")
+    assert_equal round.percent_correct, 50.0
+  end
+
+  def test_it_can_count_correct_by_category
+    card1 = Card.new("What color is the sky?", "blue", :Science)
+    card2 = Card.new("What is your quest?", "To seek the holy grail", :Movies)
+    deck = Deck.new([card1, card2])
+    round = Round.new(deck)
+
+    round.take_turn("blue")
+    round.take_turn("To seek the holy grail")
+    assert_equal round.number_correct_by_category(:Science), 1
+  end
+
+  def test_it_can_determine_percent_correct_by_category
+    card1 = Card.new("What color is the sky?", "blue", :Science)
+    card2 = Card.new("What is your quest?", "To seek the holy grail", :Movies)
+    deck = Deck.new([card1, card2])
+    round = Round.new(deck)
+
+    round.take_turn("blue")
+    round.take_turn("To seek the holy grail")
+  end
+
 end
