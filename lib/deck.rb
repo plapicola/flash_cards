@@ -5,7 +5,12 @@ class Deck
   attr_reader :cards
 
   def initialize(cards = [])
-    @cards = cards
+    # Adds case to convert singleton card to array
+    if cards.class != Array
+      @cards = [cards]
+    else
+      @cards = cards
+    end
   end
 
   def count
