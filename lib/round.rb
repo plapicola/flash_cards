@@ -17,6 +17,50 @@ class Round
     return @turns.last
   end
 
+  def start
+    print_welcome_message
+    play_game
+    print_outcomes
+  end
+
+  def print_welcome_message
+    puts "Welcome! You're playing with #{@deck.cards.count} cards."
+    puts "#{"-" * 40}"
+  end
+
+  def play_game
+    until @deck.cards.count == @turns.count
+      puts "This is card #{turns.count + 1} of #{@deck.cards.count}"
+      puts "Question: #{current_card.question}"
+      guess = gets.chomp
+      new_turn = take_turn(guess)
+      puts "#{new_turn.feedback}"
+    end
+  end
+
+  def print_outcomes
+    puts "#{"*" * 6} Game Over! #{"*" * 6}"
+    puts "You had #{number_correct} correct guesses of #{@deck.cards.count}"
+    print_category_outcomes
+  end
+
+  def print_category_outcomes
+    categories = get_categories
+    categories.each do |category|
+      puts "#{category.to_s} - #{percent_correct_by_category(category)}% correct"
+    end
+  end
+
+  def get_categories
+    categories = []
+    @deck.cards.each do |card|
+      if !categories.include?(card.category)
+        categories << card.category
+      end
+    end
+    return categories
+  end
+
   def current_card
     return @deck.cards[@current_card_index]
   end
@@ -61,7 +105,7 @@ class Round
         end
       end
     end
-    return count_correct.to_f / count_category
+    return count_correct.to_f / count_category * 100
   end
 
 

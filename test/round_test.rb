@@ -116,7 +116,8 @@ class RoundTest < Minitest::Test
 
     round.take_turn("blue")
     round.take_turn("To seek the holy grail")
-    round.percent_correct_by_category(:Science)
+    assert_equal round.percent_correct_by_category(:Science), 100.0
+
   end
 
 end
