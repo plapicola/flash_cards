@@ -1,0 +1,5 @@
+What color is the sky?,blue,Science
+What is the top rated game of all time?,Ocarina of Time,Gaming
+What is the most played game in the world?,League of Legends,Gaming
+What was your companion in the original Pokemon game?,Pikachu,Gaming
+What system revitalized home consoles in North America?,NES,Gaming
