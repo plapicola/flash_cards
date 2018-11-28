@@ -15,14 +15,15 @@ class CardGeneratorTest < Minitest::Test
   def test_it_returns_an_array_of_cards
     file = "./lib/cards.txt"
     card_generator = CardGenerator.new(file)
+    generated_cards = card_generator.cards
 
-    expected =
-    [Card.new("What color is the sky?", "blue", :Science),
-    Card.new("What is the top rated game of all time?", "Ocarina of Time", :Gaming),
-    Card.new("What is the most played game in the world?", "League of Legends", :Gaming),
-    Card.new("What was your companion in the original Pokemon game?", "Pikachu", :Gaming),
-    Card.new("What system revitalized home consoles in North America?", "NES", :Gaming)]
-
-    assert_equal card_generator.cards, expected
+    assert_instance_of Array, generated_cards
+    assert_equal 5, generated_cards.length
+    assert_instance_of Card, generated_cards.first
+    assert_instance_of Card, generated_cards.last
+    assert_equal "blue", generated_cards.first.answer
+    assert_equal :Science, generated_cards.first.category
+    assert_equal :Gaming, generated_cards.last.category
+    assert_equal "What system revitalized home consoles in North America?", generated_cards.last.question
   end
 end
