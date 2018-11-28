@@ -1,5 +1,5 @@
 require_relative 'round'
-require './card_generator'
+require './lib/card_generator'
 
 
 
@@ -10,6 +10,8 @@ require './card_generator'
 # card5 = Card.new("What system revitalized home consoles in North America?", "NES", :Gaming)
 #
 # deck = Deck.new([card1, card2, card3, card4, card5])
+card_generator = CardGenerator.new("./lib/cards.txt")
+deck = Deck.new(card_generator.cards())
 round = Round.new(deck)
 
 round.start
