@@ -118,7 +118,16 @@ class RoundTest < Minitest::Test
     round.take_turn("blue")
     round.take_turn("To seek the holy grail")
     assert_equal round.percent_correct_by_category(:Science), 100.0
-    assert_equal round.percent_correct_by_category(:Literature), 0.0
+  end
+
+  def test_it_can_handle_zero_turns_taken
+    card1 = Card.new("What color is the sky?", "blue", :Science)
+    card2 = Card.new("What is your quest?", "To seek the holy grail", :Movies)
+    deck = Deck.new([card1, card2])
+    round = Round.new(deck)
+
+    assert_equal 0.0, round.percent_correct
+    assert_equal 0.0, round.percent_correct_by_category(:Literature)
   end
 
 end
