@@ -7,13 +7,11 @@ class Round
 
   def initialize(deck)
     @deck = deck
-    @current_card_index = 0
     @turns = []
   end
 
   def take_turn(guess)
     @turns << Turn.new(guess, current_card)
-    @current_card_index += 1
     return @turns.last
   end
 
@@ -62,7 +60,7 @@ class Round
   end
 
   def current_card
-    return @deck.cards[@current_card_index]
+    return @deck.cards[@turns.count]
   end
 
   def number_correct
@@ -76,17 +74,19 @@ class Round
     return count_correct
   end
 
-  def percent_correct
-    if @turns.count != 0
-      return number_correct / @turns.count.to_f * 100
+  # Added default values to re-use calculation for other percentage methods
+  def percent_correct(num_correct = number_correct, num_turns = @turns.count)
+    if num_turns != 0
+      return num_correct / num_turns.to_f * 100
     end
     return 0.0
   end
 
   def number_correct_by_category(category)
     count_correct = 0
-    @turns.each do |turn|
-      if turn.card.category == category && turn.correct?
+    cards_in_category = @deck.cards_in_category(category)
+    cards_in_category.each do |card|
+      if card.turn != nil && card.turn.correct?
         count_correct += 1
       end
     end
@@ -94,22 +94,22 @@ class Round
   end
 
   def percent_correct_by_category(category)
+    cards_in_category = @deck.cards_in_category(category)
     count_correct = 0;
     count_category = 0;
-    @turns.each do |turn|
-      if turn.card.category == category
+
+    cards_in_category.each do |card|
+      if card.turn != nil
         count_category += 1
-        if turn.correct?
+        if card.turn.correct?
           count_correct += 1
         end
       end
     end
 
-    # Check for divide by 0
-    if (count_category != 0)
-      return count_correct.to_f / count_category * 100
-    end
-    return 0.0;
+
+    return percent_correct(count_correct, count_category)
+
   end
 
 

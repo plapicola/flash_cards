@@ -1,5 +1,3 @@
-require_relative 'card'
-
 class Turn
 
   attr_reader :guess, :card
@@ -7,6 +5,7 @@ class Turn
   def initialize(guess, card)
     @guess = guess
     @card = card
+    card.turn = self
   end
 
   def correct?
