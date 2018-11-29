@@ -1,16 +1,9 @@
-require_relative 'card'
-
 class Deck
 
   attr_reader :cards
 
   def initialize(cards = [])
-    # Adds case to convert singleton card to array
-    if cards.class != Array
-      @cards = [cards]
-    else
-      @cards = cards
-    end
+    @cards = cards
   end
 
   def count

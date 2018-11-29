@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/round'
+require_relative './test_helper'
 
 
 class RoundTest < Minitest::Test
@@ -36,7 +34,7 @@ class RoundTest < Minitest::Test
 
   def test_it_can_take_a_turn
     card1 = Card.new("What color is the sky?", "blue", :Science)
-    deck = Deck.new(card1)
+    deck = Deck.new([card1])
     round = Round.new(deck)
 
     # Check for initialized array

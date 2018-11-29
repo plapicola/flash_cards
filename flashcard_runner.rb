@@ -1,5 +1,6 @@
-require_relative 'round'
-require './lib/card_generator'
+require_relative './lib/card_generator'
+require_relative './lib/deck'
+require_relative './lib/round'
 
 
 

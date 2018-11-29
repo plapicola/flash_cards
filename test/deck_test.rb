@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/deck'
+require_relative './test_helper'
 
 
 class TestDeck < Minitest::Test

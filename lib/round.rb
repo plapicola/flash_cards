@@ -1,4 +1,3 @@
-require_relative 'deck'
 require_relative 'turn'
 
 class Round
