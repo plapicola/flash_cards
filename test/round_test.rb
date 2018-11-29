@@ -63,14 +63,14 @@ class RoundTest < Minitest::Test
     assert round.take_turn("blue").correct?
   end
 
-  def test_it_can_give_feedback_on_last_guess
+  def test_it_can_give_feedback_on_last_turn
     card1 = Card.new("What color is the sky?", "blue", :Science)
     deck = Deck.new([card1])
     round = Round.new(deck)
 
     round.take_turn("rainbow")
 
-    assert_equal round.guesses.last.feedback, "Incorrect."
+    assert_equal round.turns.last.feedback, "Incorrect."
   end
 
   def test_it_counts_correct_guesses
@@ -106,6 +106,7 @@ class RoundTest < Minitest::Test
     round.take_turn("blue")
     round.take_turn("To seek the holy grail")
     assert_equal round.number_correct_by_category(:Science), 1
+    assert_equal round.number_correct_by_category(:Literature), 0
   end
 
   def test_it_can_determine_percent_correct_by_category
@@ -117,7 +118,7 @@ class RoundTest < Minitest::Test
     round.take_turn("blue")
     round.take_turn("To seek the holy grail")
     assert_equal round.percent_correct_by_category(:Science), 100.0
-
+    assert_equal round.percent_correct_by_category(:Literature), 0.0
   end
 
 end

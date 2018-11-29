@@ -65,10 +65,6 @@ class Round
     return @deck.cards[@current_card_index]
   end
 
-  def guesses
-    return @turns
-  end
-
   def number_correct
     count_correct = 0
     @turns.each do |turn|
@@ -105,7 +101,12 @@ class Round
         end
       end
     end
-    return count_correct.to_f / count_category * 100
+
+    # Check for divide by 0
+    if (count_category != 0)
+      return count_correct.to_f / count_category * 100
+    end
+    return 0.0;
   end
 
 
