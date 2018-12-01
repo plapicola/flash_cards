@@ -86,8 +86,6 @@ class Round
 
   def percent_correct_by_category(category)
     cards_in_category = @deck.cards_in_category(category)
-    # count_correct = 0;
-    # count_category = 0;
 
     values = {correct: 0, count: 0}
 
