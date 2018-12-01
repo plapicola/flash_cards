@@ -49,7 +49,7 @@ class RoundTest < Minitest::Test
     deck = Deck.new([card1])
     round = Round.new(deck)
     turn = round.take_turn("Blue")
-
+    # Compare internal info
     assert turn.class == Turn
   end
 
@@ -86,13 +86,17 @@ class RoundTest < Minitest::Test
   def test_it_tracks_percentage_correct
     card1 = Card.new("What color is the sky?", "blue", :Science)
     card2 = Card.new("What is your quest?", "To seek the holy grail", :Movies)
-    deck = Deck.new([card1, card2])
+    card3 = Card.new("Where should we go now?", "Pub", :Movies)
+    deck = Deck.new([card1, card2, card3])
     round = Round.new(deck)
 
     round.take_turn("blue")
     assert_equal round.percent_correct, 100.0
     round.take_turn("To learn how to type")
     assert_equal round.percent_correct, 50.0
+    round.take_turn("Pub")
+    # Test for rounding of percentages
+    assert_equal round.percent_correct, 66.666.round(2)
   end
 
   def test_it_can_count_correct_by_category
@@ -127,5 +131,5 @@ class RoundTest < Minitest::Test
     assert_equal 0.0, round.percent_correct
     assert_equal 0.0, round.percent_correct_by_category(:Literature)
   end
-
+  # Current card changes after turn
 end

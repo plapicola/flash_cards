@@ -1,4 +1,4 @@
-require './test_helper'
+require_relative './test_helper'
 
 class CardTest < Minitest::Test
 
@@ -25,4 +25,18 @@ class CardTest < Minitest::Test
 
     assert_equal :Geography, card.category
   end
+
+  def test_it_doesnt_have_a_turn_by_default
+    card = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
+
+    assert_nil card.turn
+  end
+
+  def test_it_can_be_paired_with_a_turn
+    card = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
+    turn = Turn.new("Juneau", card)
+
+    assert_equal turn, card.turn
+  end
+
 end

@@ -48,14 +48,11 @@ class Round
     end
   end
 
+  # Helper for print_category_outcomes, aggregates a list of all categories present
   def get_categories
-    categories = []
-    @deck.cards.each do |card|
-      if !categories.include?(card.category)
-        categories << card.category
-      end
+    @deck.cards.inject([]) do |categories, card|
+      categories.include?(card.category) ? categories : categories << card.category
     end
-    return categories
   end
 
   def current_card
@@ -63,20 +60,15 @@ class Round
   end
 
   def number_correct
-    count_correct = 0
-    @turns.each do |turn|
-      if turn.correct?
-        count_correct += 1
-      end
+    @turns.inject(0) do |count, turn|
+      turn.correct? ? count += 1 : count
     end
-
-    return count_correct
   end
 
   # Added default values to re-use calculation for other percentage methods
-  def percent_correct(num_correct = number_correct, num_turns = @turns.count)
-    if num_turns != 0
-      return num_correct / num_turns.to_f * 100
+  def percent_correct(values = {correct: number_correct, count: @turns.count})
+    if values[:correct] != 0
+      return (values[:correct] / values[:count].to_f * 100).round(2)
     end
     return 0.0
   end
@@ -94,21 +86,20 @@ class Round
 
   def percent_correct_by_category(category)
     cards_in_category = @deck.cards_in_category(category)
-    count_correct = 0;
-    count_category = 0;
+    # count_correct = 0;
+    # count_category = 0;
+
+    values = {correct: 0, count: 0}
 
     cards_in_category.each do |card|
       if card.turn != nil
-        count_category += 1
+        values[:count] += 1
         if card.turn.correct?
-          count_correct += 1
+          values[:correct] += 1
         end
       end
     end
-
-
-    return percent_correct(count_correct, count_category)
-
+    return percent_correct(values)
   end
 
 
