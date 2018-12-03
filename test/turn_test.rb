@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/turn'
+require_relative './test_helper'
 
 class TurnTest < Minitest::Test
 
